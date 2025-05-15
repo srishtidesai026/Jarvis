@@ -1,3 +1,4 @@
+import csv
 import sqlite3
 conn = sqlite3.connect("mai.db")
 cursor = conn.cursor()
@@ -54,6 +55,27 @@ cursor = conn.cursor()
 
 query = "INSERT INTO web_command VALUES(null, 'code', 'https://leetcode.com/')"
 cursor.execute(query)
+
+query = "CREATE TABLE IF NOT EXISTS contacts(id integer primary key, name VARCHAR(200), mobile_no VARCHAR(255), email VARCHAR(300))"
+cursor.execute(query) 
+
+
+desired_columns_indices = [0, 18]
+
+# read the contacts and load it into sql database
+with open('contacts.csv', 'r', encoding='utf-8') as csvfile:
+    csvreader = csv.reader(csvfile)
+    for row in csvreader:
+        # print(f"Row data: {row}")  
+        # print(f"Desired columns: {desired_columns_indices}")  
+        # print(f"Row length: {len(row)}") 
+        selected_data = [row[i] for i in desired_columns_indices]
+        cursor.execute(''' INSERT INTO contacts (id, 'name', 'mobile_no') VALUES (null, ?, ?);''', tuple(selected_data))
+
 conn.commit()
+conn.close()
+
+
+
 
 

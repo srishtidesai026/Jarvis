@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('.text').textillate({
         loop: true,
         sync: true,
@@ -56,4 +57,58 @@ $(document).ready(function () {
         }
     }
     document.addEventListener('keyup', doc_keyUp, false);
+
+
+    // to be displayed after the search operation via text is over
+    function PlayAssistant(message) {
+
+        if (message.trim() !== "") {
+            $("#oval").attr("hidden", true);
+            $("#siriwave").attr("hidden", false);
+
+            $("#greeting").hide();  // Hide greeting ONLY, not other messages
+
+            eel.allCommands(message); // Process user command
+
+            $("#chatbox").val("");  // Clear input after sending
+            showHideSendButton();  // Ensure correct button visibility
+        }
+    }
+
+
+    function showHideSendButton() {
+        let message = $("#chatbox").val().trim();
+        if (message === "") {
+            $("#mic").show();
+            $("#send").hide();  // Use .hide() instead of attr("hidden", true)
+        } else {
+            $("#mic").hide();
+            $("#send").show();  // Use .show() instead of attr("hidden", false)
+        }
+    }
+
+    // Detect typing in chatbox
+    $("#chatbox").on("input", function () {
+        showHideSendButton();
+        $("#greeting").hide();
+    });
+
+
+    // Handle send button click
+    $("#send").click(function () {
+        let message = $("#chatbox").val();
+        PlayAssistant(message);
+    });
+
+
+    // search activated for 'enter' key
+    $("#chatbox").keypress(function (e) {
+
+        key = e.which;
+        if (key == 13) {
+            let message = $("#chatbox").val();
+            PlayAssistant(message);
+        }
+    });
+
 });

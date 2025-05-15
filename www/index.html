@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GF</title>
+    <title>MAI</title>
 
     <link rel="shortcut icon" href="assets/texllate/images/icon Jarvis.jpeg">
 
@@ -25,6 +25,7 @@
 <body>
     <div class="container">
 
+        <!--oval section (home page)-->
         <section id="oval" class="mb-4">
 
 
@@ -54,8 +55,11 @@
                                     placeholder="type here...">
 
                                 <div class="buttons">
+                                    <button id="send" class="glow-on-hover"><i class="bi bi-send-fill"></i></button>
                                     <button id="mic" class="glow-on-hover"><i class="bi bi-mic-fill"></i></button>
-                                    <button id="chat" class="glow-on-hover"><i class="bi bi-chat-fill"></i></button>
+                                    <button id="chat" class="glow-on-hover" data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i
+                                            class="bi bi-chat-fill"></i></button>
                                     <button id="settings" class="glow-on-hover"><i class="bi bi-gear-fill"></i></button>
                                 </div>
 
@@ -67,17 +71,20 @@
             </div>
         </section>
 
+        <!--siriwave animation-->
         <section id="siriwave" hidden>
             <div class="container">
                 <div class="row">
 
-                    <div class="d-flex justify-content-center align-items-center" style="height:100vh">
+                    <div class="d-flex siri" style="height:100vh">
 
                         <div class="sirimsg">
-                            <p>Hello! I'm G.R.A.P.E.F.R.U.I.T, your virtual assistant</p>
+                            <p id="greeting">Hello! I'm M.A.I, your virtual assistant</p>
                         </div>
 
-                        <div id="siri-container"></div>
+                        <div id="siri-container">
+                            <canvas id="siri-wave"></canvas>
+                        </div>
 
                     </div>
                 </div>
@@ -85,6 +92,21 @@
         </section>
 
     </div>
+
+
+    <!--dashboard to store chat history-->
+    <div class="offcanvas offcanvas-start chat-canvas" tabindex="-1" data-bs-scroll="true" data-bs-backdrop="false"
+        id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title text-white" id="offcanvasScrollingLabel">Chats</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div id="chat-canvas-body" class="offcanvas-body">
+            <!--chat code here-->
+        </div>
+    </div>
+
+
 
     <!--Jquery (plug in) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>

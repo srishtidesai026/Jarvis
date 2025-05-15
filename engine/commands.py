@@ -4,14 +4,16 @@ import time
 
 
 # make assistant speak
-def speak(text):   
+def speak(text): 
+    text = str(text)  
     engine = pyttsx3.init()
     voices = engine.getProperty('voices') # getting details of current voice
     engine.setProperty('voice', voices[1].id) 
     engine.setProperty('rate', 170)
     eel.displayMsg(text)
-    print(text)       
+    print(text)      
     engine.say(text)
+    eel.receiverText(text)
     engine.runAndWait()
 
 
@@ -45,20 +47,48 @@ def takeCommand():
 
 
 @eel.expose
-def allCommands():
-    try:
+def allCommands(message = 1):
+
+    ## to differentiate between text and audio inputs
+    if message == 1:
         query = takeCommand()
         print(query)
+        eel.senderText(query)
+    else:
+        query = message
+        eel.senderText(query)
 
+    try:
         if "open" in query:
             from engine.features import openCommand
             openCommand(query)
+
         elif "on youtube" in query:
             from engine.features import playYoutube
             playYoutube(query)
+
+        elif "send a message" in query or "voice call" in query or "video call" in query:
+            from engine.features import findContact, whatsApp
+            contact_no, name = findContact(query)
+
+            if contact_no != 0:
+                
+                if "send a message" in query:
+                    message = "message"
+                    speak("what message do you want to send")
+                    query = takeCommand()
+                elif "voice call" in query:
+                    message = 'call'
+                else:
+                    message = 'video call'
+                
+            whatsApp(contact_no, query, message, name)
+                
         else:
-            print("not run")
-    except:
-        print("Error!")
+            from engine.features import chatBot
+            chatBot(query)
+            
+    except Exception as e:
+        print(e)
 
     eel.showHood()
