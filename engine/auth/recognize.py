@@ -18,7 +18,7 @@ def AuthenticateFace():
     font = cv2.FONT_HERSHEY_SIMPLEX  # denotes the font type
 
 
-    id = 2  # number of persons you want to Recognize
+    id = 1  # number of persons you want to Recognize
 
 
     names = ['', 'Srishti']  # names, leave first empty bcz counter starts from 0
@@ -57,7 +57,7 @@ def AuthenticateFace():
             id, accuracy = recognizer.predict(converted_image[y:y+h, x:x+w])
 
             # Check if accuracy is less them 100 ==> "0" is perfect match
-            if (accuracy < 100):
+            if (accuracy < 50):
                 id = names[id]
                 accuracy = "  {0}%".format(round(100 - accuracy))
                 flag = 1
